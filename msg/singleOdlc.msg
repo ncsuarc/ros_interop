@@ -1,0 +1,11 @@
+Id mission
+odlc_type type
+float64 latitude
+float64 longitude
+odlc_orientation orientation
+odlc_shape shape
+string alphanumeric
+color shape_color
+color alphanumeric_color
+string description
+bool autonomous

@@ -1,6 +1,6 @@
 import rospy
-from ros_interop.srv import Team
-from ros_interop.msg import TeamStatus,TeamID,Id,TeamsResponse
+from ros_interop.srv import Team,TeamResponse,Odlc,OdlcResponse
+from ros_interop.msg import *
 
 
 class Teams():
@@ -26,7 +26,7 @@ class Teams():
         id.university = "ncsu"
         msg.Team = id
         msg.in_air = False
-        teams = TeamsResponse()
+        teams = TeamResponse()
         teams.team_list = []
         teams.team_list.append(msg)
         teams.team_list.append(msg)
@@ -35,12 +35,16 @@ class Teams():
 class odlcs():
     def __init__(self) -> None:
         pass
+
+
     def router(self,req):
         type = req.type
         if type == "GET":
             return self.get_targets(req)
         else:
-            return None
+            return "didnt work"
+
+    
     def get_targets(self,req):
         print("Get Targets Called")
 
@@ -50,17 +54,34 @@ class odlc():
     def router(self,req):
         type = req.type
         if type == "GET":
-            return self.get_targets(req)
+            return self.get_target(req)
         else:
             return None
     def get_target(self,req):
+        targetId = req.mission
         print("Get Target Called")
+        msg1 = OdlcResponse()
+        msg = singleOdlc()
+        msg.mission = targetId
+        msg.type = odlc_type(True,False)
+        msg.latitude = 43.356
+        msg.longitude = 54.653
+        msg.orientation = odlc_orientation(2)
+        msg.shape = odlc_shape(1)
+        msg.alphanumeric = "Hello world"
+        msg.shape_color = color(1)
+        msg.alphanumeric_color = color(2)
+        msg.description = "HelloPt2"
+        msg.autonomous  = False
+        msg1.target_info = msg
+        return msg1
+
 
 
 def judges_server():
     rospy.init_node('judges_server')
-    teamObj = Teams()
-    s = rospy.Service('teams', Team, teamObj.router)
+    odlcObj = odlc()
+    s = rospy.Service('odlc', Odlc, odlcObj.router)
     rospy.spin()
 
 if __name__ == '__main__':

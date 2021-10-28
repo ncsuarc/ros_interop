@@ -1,2 +1,4 @@
+Header header
+string type
 ---
-TeamStatus Teams
+TeamStatus[] team_list
