@@ -1,0 +1,11 @@
+int64 id
+position lost_comms_pos
+FlyZone[] fly_zones
+position[] waypoints
+position[] search_grid_points
+position off_axis_odlc_pos
+position emergent_last_known_pos
+position[] air_drop_boundary_points
+position air_drop_pos
+position ugv_drive
+StationaryObstacle[] stationary_obstacles

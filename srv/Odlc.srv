@@ -1,4 +1,4 @@
-Id mission
+int64 mission
 string type
 ---
 singleOdlc target_info

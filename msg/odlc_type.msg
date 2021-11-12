@@ -1,2 +1,1 @@
-bool standard
-bool emergent
+bool is_emergent

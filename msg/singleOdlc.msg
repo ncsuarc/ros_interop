@@ -1,4 +1,4 @@
-Id mission
+int64 mission
 odlc_type type
 float64 latitude
 float64 longitude
