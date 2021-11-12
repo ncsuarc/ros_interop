@@ -31,4 +31,4 @@ def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(odlc_client())
+    print(teams_client())
