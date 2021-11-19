@@ -2,24 +2,23 @@ from __future__ import print_function
 
 import sys
 import rospy
-from ros_interop.srv import Team,Odlc,OdlcRequest
-from ros_interop.msg  import Id
+from ros_interop.srv import Team,ODLC,ODLCRequest
+from ros_interop.msg import RequestType
 
 def teams_client():
     rospy.wait_for_service('teams')
     try:
         teams = rospy.ServiceProxy('teams', Team)
-        resp1 = teams(type = "GET")
+        resp1 = teams(request_type = RequestType(RequestType.GET))
         return resp1
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
-def odlc_client():
+def ODLC_client():
     rospy.wait_for_service('odlc')
-    reqType = "GET"
     try:
-        odlcServer = rospy.ServiceProxy('odlc', Odlc)
-        request = OdlcRequest(Id(int(1)),"GET")
+        odlcServer = rospy.ServiceProxy('odlc', ODLC)
+        request = ODLCRequest(int(1),RequestType(RequestType.GET))
         resp1 = odlcServer(request)
         return resp1
     except rospy.ServiceException as e:

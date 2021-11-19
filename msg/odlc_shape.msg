@@ -12,8 +12,5 @@ uint8 HEPTAGON = 10
 uint8 OCTAGON = 11
 uint8 STAR = 12
 uint8 CROSS = 13
-
-
 # Request Fields
-
 uint8 shape

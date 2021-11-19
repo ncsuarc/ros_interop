@@ -1,3 +1,1 @@
-float64 latitude
-float64 longitude
-float64Opt altitude
+geographic_msgs/GeoPoint geopoint

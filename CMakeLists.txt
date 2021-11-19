@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
     rospy
     std_msgs
     message_generation
+    geographic_msgs
    )
 
 ## System dependencies are found with CMake's conventions
@@ -54,21 +55,23 @@ add_message_files(
    TeamStatus.msg  
    Telemetry.msg  
    float64Opt.msg
-   singleOdlc.msg
+   singleODLC.msg
    odlc_orientation.msg
    odlc_shape.msg
    odlc_type.msg
-   color.msg
+   Color.msg
    mission.msg
    StationaryObstacle.msg
    FlyZone.msg
+   RequestType.msg
  )
 
 ## Generate services in the 'srv' folder
 add_service_files(
    FILES
    Team.srv
-   Odlc.srv
+   ODLC.srv
+   ODLCs.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -81,7 +84,9 @@ add_service_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
    DEPENDENCIES
-   std_msgs# Or other packages containing msgs
+   std_msgs
+   geographic_msgs
+   # Or other packages containing msgs
  )
 
 ################################################

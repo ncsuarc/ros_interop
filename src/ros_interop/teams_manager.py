@@ -1,16 +1,17 @@
 import rospy
-from ros_interop.srv import Team,TeamResponse
+from ros_interop.srv import TeamResponse
 from ros_interop.msg import * 
-
+from geographic_msgs.msg import GeoPoint
 
 class TeamsManager():
 
-    def __init__(self) -> None:
+    def __init__(self,interop_client) -> None:
+        self.interop_client = interop_client
         pass
 
     def router(self,req):
-        type = req.type
-        if type == "GET":
+        type = req.request_type.request_type
+        if type == RequestType.GET:
             return self.get_teams()
         else:
             return None
@@ -25,6 +26,7 @@ class TeamsManager():
         id.university = "ncsu"
         msg.Team = id
         msg.in_air = False
+        msg.telemetry = Telemetry(GeoPoint(0,0,0),0)
         teams = TeamResponse()
         teams.team_list = []
         teams.team_list.append(msg)
