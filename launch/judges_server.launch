@@ -1,4 +1,4 @@
 <launch>
-  <node name="judges_server" pkg="ros_interop" type="judges_server.py" output="screen"/>
-  <node name="test_node" pkg="ros_interop" type="testClient.py" output="screen"/>
+  <node name="judges_server" pkg="ros_interop" type="judges_server.py" output="screen" required = "true"/>
+  <node name="test_node" pkg="ros_interop" type="testClient.py" output="screen" required = "true"/>
 </launch>

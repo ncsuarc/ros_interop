@@ -7,10 +7,7 @@ from interop_clients import InteropClient
 
 
 def judges_server(url:str, username:str, password:str):
-    try:
-        interop_client = InteropClient(url,username,password)
-    except:
-        interop_client = None
+    interop_client = InteropClient(url,username,password)
     rospy.init_node('judges_server')
     teams_obj = TeamsManager(interop_client)
     teams_service = rospy.Service('teams',Team,teams_obj.router)
@@ -20,5 +17,5 @@ def judges_server(url:str, username:str, password:str):
     rospy.spin()
 
 if __name__ == '__main__':
-    judges_server('url','user','pwd')
+    judges_server("http://localhost:8000","testuser","testpass")
     

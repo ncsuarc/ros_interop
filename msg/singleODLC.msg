@@ -1,0 +1,11 @@
+int64 mission
+odlc_type type
+float64 latitude
+float64 longitude
+odlc_orientation orientation
+odlc_shape shape
+string alphanumeric
+Color shape_color
+Color alphanumeric_color
+string description
+bool autonomous
