@@ -14,7 +14,7 @@ def teams_client():
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
-def ODLC_client():
+def odlc_client():
     rospy.wait_for_service('odlc')
     try:
         odlcServer = rospy.ServiceProxy('odlc', ODLC)
@@ -34,7 +34,12 @@ def ODLC_client():
         msg1.post_target_info = msg
         request = ODLCRequest(0,RequestType(RequestType.POST),msg)
         resp1 = odlcServer(request)
-        response = odlcServer(ODLCRequest(42,RequestType(RequestType.GET),singleODLC()))
+        resp2 = odlcServer(ODLCRequest(id = 67,request_type =  RequestType(RequestType.GET)))
+        odlcPut = resp2.target_info
+        odlcPut.latitude = 89
+        msg2 = ODLCRequest(67, RequestType(RequestType.PUT),odlcPut)
+        resp2 = odlcServer(msg2)
+        response = odlcServer(ODLCRequest(67,RequestType(RequestType.GET),singleODLC()))
         return response
     
     except rospy.ServiceException as e:
@@ -46,4 +51,4 @@ def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(ODLC_client())
+    print(odlc_client())

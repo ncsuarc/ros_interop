@@ -9,10 +9,12 @@ class ODLCManager():
         pass
     def router_ODLC(self,req):
         type = req.request_type.request_type
-        if type == RequestType.GET:
+        if type == RequestType.GET: 
             return self.get_target(req)
         elif type == RequestType.POST:
             return self.post_target(req)
+        elif type == RequestType.PUT:
+            return self.put_target(req)
         else:
             return None
     def router_ODLCs(self,req):
@@ -42,7 +44,6 @@ class ODLCManager():
         return msg1
     
     def post_target(self,req):
-        print("target posted")
         target_info = req.post_target_info
 
         target_details = {}
@@ -60,3 +61,25 @@ class ODLCManager():
         out = self.interop_client.post_odlc(target_details)
         response = ODLCResponse(out,req.post_target_info)
         return response
+    def put_target(self,req):
+        target_details = {}
+        target_info = req.post_target_info
+        target_details = {}
+        target_details['mission'] = target_info.mission
+        target_details['type'] = target_info.type.odlc_type
+        target_details['latitude'] = target_info.latitude
+        target_details['longitude'] = target_info.longitude
+        target_details['orientation'] = target_info.orientation.direction
+        target_details['shape'] = target_info.shape.shape
+        #target_details['alphanumeric'] = target_info.alphanumeric
+        target_details['shape_color'] = target_info.shape_color.color_num
+        target_details['alphanumeric_color'] = target_info.alphanumeric_color.color_num
+        target_details['description'] = target_info.description
+        target_details['autonomous'] = target_info.autonomous
+        out_target_details = {}
+        #target_details = {k:v for k,v in target_details.items() if not (v==0 or v=='')}
+        out = self.interop_client.put_odlc(req.id,target_details)
+        print(out_target_details)
+        response = ODLCResponse(req.id,None)
+        return response
+
