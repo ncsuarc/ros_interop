@@ -1,7 +1,7 @@
 import rospy
 from ros_interop.msg import *
 from ros_interop.srv import ODLCResponse
-from interop_clients.api import OdlcColor, OdlcOrientation, OdlcShape, OdlcType
+from interop_clients.api import Odlc, OdlcColor, OdlcOrientation, OdlcShape, OdlcType
 
 class ODLCManager():
     def __init__(self,interop_client) -> None:
@@ -15,6 +15,8 @@ class ODLCManager():
             return self.post_target(req)
         elif type == RequestType.PUT:
             return self.put_target(req)
+        elif type == RequestType.DELETE:
+            return self.delete_target(req)
         else:
             return None
     def router_ODLCs(self,req):
@@ -80,6 +82,10 @@ class ODLCManager():
         #target_details = {k:v for k,v in target_details.items() if not (v==0 or v=='')}
         out = self.interop_client.put_odlc(req.id,target_details)
         print(out_target_details)
+        response = ODLCResponse(req.id,target_info)
+        return response
+    def delete_target(self,req):
+        target_id = req.id
+        out = self.interop_client.delete_odlc(req.id)
         response = ODLCResponse(req.id,None)
         return response
-

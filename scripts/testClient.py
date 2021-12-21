@@ -40,6 +40,8 @@ def odlc_client():
         msg2 = ODLCRequest(67, RequestType(RequestType.PUT),odlcPut)
         resp2 = odlcServer(msg2)
         response = odlcServer(ODLCRequest(67,RequestType(RequestType.GET),singleODLC()))
+        print(resp1.id-1)
+        response = odlcServer(ODLCRequest(resp1.id-1,RequestType(RequestType.DELETE),singleODLC()))
         return response
     
     except rospy.ServiceException as e:
