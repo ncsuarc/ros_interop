@@ -60,4 +60,4 @@ def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(mission_client())
+    print(odlc_client())
