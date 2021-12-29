@@ -16,7 +16,6 @@ class TelemetryManager():
             return None
     def post_telemetery(self,req):
         telemetry_info = req.telemetry_request
-        print(telemetry_info)
         telemetry_data = {}
         telemetry_data['latitude'] = telemetry_info.position.latitude
         telemetry_data['longitude'] = telemetry_info.position.longitude
