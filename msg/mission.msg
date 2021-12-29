@@ -7,5 +7,5 @@ position off_axis_odlc_pos
 position emergent_last_known_pos
 position[] air_drop_boundary_points
 position air_drop_pos
-position ugv_drive
+position ugv_drive_pos
 StationaryObstacle[] stationary_obstacles

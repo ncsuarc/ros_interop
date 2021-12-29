@@ -72,6 +72,7 @@ add_service_files(
    Team.srv
    ODLC.srv
    ODLCs.srv
+   Mission.srv
 )
 
 ## Generate actions in the 'action' folder

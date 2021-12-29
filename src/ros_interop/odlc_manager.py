@@ -23,7 +23,6 @@ class ODLCManager():
         pass
     def get_target(self,req):
         target_id = req.id
-        print("Get Target Called")
         target_info = self.interop_client.get_odlc(target_id)
         msg1 = ODLCResponse()
         msg1.id = target_info['id']
@@ -64,25 +63,32 @@ class ODLCManager():
         response = ODLCResponse(out,req.post_target_info)
         return response
     def put_target(self,req):
-        target_details = {}
+        target_id = req.id
         target_info = req.post_target_info
-        target_details = {}
-        target_details['mission'] = target_info.mission
-        target_details['type'] = target_info.type.odlc_type
-        target_details['latitude'] = target_info.latitude
-        target_details['longitude'] = target_info.longitude
-        target_details['orientation'] = target_info.orientation.direction
-        target_details['shape'] = target_info.shape.shape
-        #target_details['alphanumeric'] = target_info.alphanumeric
-        target_details['shape_color'] = target_info.shape_color.color_num
-        target_details['alphanumeric_color'] = target_info.alphanumeric_color.color_num
-        target_details['description'] = target_info.description
-        target_details['autonomous'] = target_info.autonomous
-        out_target_details = {}
-        #target_details = {k:v for k,v in target_details.items() if not (v==0 or v=='')}
-        out = self.interop_client.put_odlc(req.id,target_details)
-        print(out_target_details)
-        response = ODLCResponse(req.id,target_info)
+        new_target_details = {}
+        new_target_details['mission'] = target_info.mission
+        new_target_details['type'] = target_info.type.odlc_type
+        new_target_details['latitude'] = target_info.latitude
+        new_target_details['longitude'] = target_info.longitude
+        new_target_details['orientation'] = target_info.orientation.direction
+        new_target_details['shape'] = target_info.shape.shape
+        #new_target_details['alphanumeric'] = target_info.alphanumeric
+        new_target_details['shape_color'] = target_info.shape_color.color_num
+        new_target_details['alphanumeric_color'] = target_info.alphanumeric_color.color_num
+        new_target_details['description'] = target_info.description
+        new_target_details['autonomous'] = target_info.autonomous
+        changed_target_details = {k:v for k,v in new_target_details.items() if not (v==0 or v=='')}
+        old_target = self.interop_client.get_odlc(target_id)
+        new_target = {}
+        for k,v in old_target.items():
+            if k in changed_target_details.keys():
+                new_target[k] = changed_target_details[k]
+            else:
+                new_target[k] = old_target[k]
+        del new_target['id']
+        #self.interop_client.session.patch(self.interop_client.url + "/api/odlcs" )
+        out = self.interop_client.put_odlc(target_id,new_target)
+        response = ODLCResponse(id = req.id)
         return response
     def delete_target(self,req):
         target_id = req.id

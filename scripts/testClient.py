@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import sys
 import rospy
-from ros_interop.srv import Team,ODLC,ODLCRequest
+from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest
 from ros_interop.msg import *
 
 def teams_client():
@@ -35,22 +35,29 @@ def odlc_client():
         request = ODLCRequest(0,RequestType(RequestType.POST),msg)
         resp1 = odlcServer(request)
         resp2 = odlcServer(ODLCRequest(id = 67,request_type =  RequestType(RequestType.GET)))
-        odlcPut = resp2.target_info
-        odlcPut.latitude = 89
+        odlcPut = singleODLC()
+        odlcPut.latitude = 87
         msg2 = ODLCRequest(67, RequestType(RequestType.PUT),odlcPut)
         resp2 = odlcServer(msg2)
         response = odlcServer(ODLCRequest(67,RequestType(RequestType.GET),singleODLC()))
         print(resp1.id-1)
-        response = odlcServer(ODLCRequest(resp1.id-1,RequestType(RequestType.DELETE),singleODLC()))
+        #response = odlcServer(ODLCRequest(resp1.id-1,RequestType(RequestType.DELETE),singleODLC()))
         return response
     
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
     
-
+def mission_client():
+    rospy.wait_for_service('mission')
+    try:
+        mission_service = rospy.ServiceProxy('mission',Mission)
+        resp = mission_service(MissionRequest(mission_id = 1,request_type = RequestType(RequestType.GET)))
+        return resp
+    except rospy.ServiceException as e:
+        print("Service call failed: %s"%e)
 
 def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(odlc_client())
+    print(mission_client())
