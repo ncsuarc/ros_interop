@@ -52,7 +52,7 @@ add_message_files(
    FILES
    TeamID.msg 
    TeamStatus.msg  
-   Telemetry.msg  
+   telemetry.msg  
    float64Opt.msg
    singleODLC.msg
    odlc_orientation.msg
@@ -72,6 +72,7 @@ add_service_files(
    ODLC.srv
    ODLCs.srv
    Mission.srv
+   TelemetrySrv.srv
 )
 
 ## Generate actions in the 'action' folder

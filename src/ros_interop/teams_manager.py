@@ -31,8 +31,8 @@ class TeamsManager():
             if bool(msg.in_air):
                 altitude = 10
                 geopointer = GeoPoint(10,10,10)
-                msg.telemetry = Telemetry(geopointer, altitude) 
+                msg.telemetry = telemetry(geopointer, altitude) 
             else:
-                msg.telemetry = Telemetry(GeoPoint(0,0,0),0)
+                msg.telemetry = telemetry(GeoPoint(0,0,0),0)
             teams.team_list.append(msg)
         return teams

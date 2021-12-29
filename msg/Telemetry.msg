@@ -1,2 +1,0 @@
-geographic_msgs/GeoPoint geopoint
-float64 heading
