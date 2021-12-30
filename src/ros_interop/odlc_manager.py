@@ -1,6 +1,6 @@
 import rospy
 from ros_interop.msg import *
-from ros_interop.srv import ODLCResponse
+from ros_interop.srv import ODLCResponse, ODLCsResponse
 from interop_clients.api import Odlc, OdlcColor, OdlcOrientation, OdlcShape, OdlcType
 
 class ODLCManager():
@@ -20,6 +20,36 @@ class ODLCManager():
         else:
             return None
     def router_ODLCs(self,req):
+        type = req.request_type.request_type
+        if type == RequestType.GET: 
+            return self.get_targets(req)
+        else:
+            return None
+    def get_targets(self, req):
+        missionID = req.mission_id
+        if missionID == 0:
+            targets_info = self.interop_client.get_odlcs()
+        else:
+            targets_info = self.interop_client.get_odlcs(missionID)
+        response = ODLCsResponse(targets_info = [])
+        for target_info in targets_info:
+            targetObj = singleODLC()
+            targetObj.mission = target_info['mission']
+            targetObj.type = odlc_type(OdlcType[target_info['type']].value)
+            targetObj.latitude = target_info['latitude']
+            targetObj.longitude = target_info['longitude']
+            targetObj.orientation = odlc_orientation(OdlcOrientation[target_info["orientation"]].value)
+            targetObj.shape = odlc_shape(OdlcShape[target_info['shape']].value)
+            if 'alphanumeric' in target_info.keys():
+                targetObj.alphanumeric = target_info['alphanumeric']
+            else:
+                targetObj.alphanumeric = ''
+            targetObj.shape_color = Color(OdlcColor[target_info['shapeColor']])
+            targetObj.alphanumeric_color = Color(OdlcColor[target_info['alphanumericColor']])
+            targetObj.description = target_info['description']
+            targetObj.autonomous  = target_info['autonomous']
+            response.targets_info.append(targetObj)
+        return response
         pass
     def get_target(self,req):
         target_id = req.id
@@ -40,7 +70,7 @@ class ODLCManager():
         msg.shape_color = Color(OdlcColor[target_info['shapeColor']])
         msg.alphanumeric_color = Color(OdlcColor[target_info['alphanumericColor']])
         msg.description = target_info['description']
-        msg.autonomous  = False
+        msg.autonomous  = target_info['autonomous']
         msg1.target_info = msg
         return msg1
     

@@ -1,4 +1,4 @@
-int64 mission
-string type
+int64 mission_id
+RequestType request_type
 ---
 singleODLC[] targets_info

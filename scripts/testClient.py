@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import sys
 import rospy
-from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest, TelemetrySrv, TelemetrySrvRequest
+from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest, TelemetrySrv, TelemetrySrvRequest, ODLCs,ODLCsRequest
 from ros_interop.msg import *
 from geographic_msgs.msg import GeoPoint
 
@@ -67,9 +67,17 @@ def telemetry_client():
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
+def odlcs_client():
+    rospy.wait_for_service('odlcs')
+    try:
+        odlcs_service = rospy.ServiceProxy('odlcs', ODLCs )
+        resp = odlcs_service(ODLCsRequest(request_type = RequestType(RequestType.GET), mission_id = 1))
+        return resp
+    except rospy.ServiceException as e:
+        print("Service call failed: %s"%e)
 
 def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(telemetry_client())
+    print(odlcs_client())
