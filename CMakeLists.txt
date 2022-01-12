@@ -73,6 +73,7 @@ add_service_files(
    ODLCs.srv
    Mission.srv
    TelemetrySrv.srv
+   Image.srv
 )
 
 ## Generate actions in the 'action' folder

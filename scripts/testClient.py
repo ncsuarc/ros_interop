@@ -2,9 +2,9 @@ from __future__ import print_function
 
 import sys
 import rospy
-from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest, TelemetrySrv, TelemetrySrvRequest, ODLCs,ODLCsRequest
+from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest, TelemetrySrv, TelemetrySrvRequest, ODLCs,ODLCsRequest,Image,ImageRequest
 from ros_interop.msg import *
-from geographic_msgs.msg import GeoPoint
+from geographic_msgs.msg import GeoPoint\
 
 def teams_client():
     rospy.wait_for_service('teams')
@@ -57,6 +57,18 @@ def mission_client():
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
+def map_image_client():
+    rospy.wait_for_service('map_image')
+    try:
+        map_service = rospy.ServiceProxy('map_image',Image)
+        resp = map_service(ImageRequest(id = 1,request_type = RequestType(RequestType.GET)))
+        with open('imageABCD.png','w') as f:
+            f.write(str(resp.image_data))
+        return None
+    except rospy.ServiceException as e:
+        print("Service call failed: %s"%e)
+def odlc_image_client():
+    pass
 def telemetry_client():
     rospy.wait_for_service('telemetry')
     try:
@@ -80,4 +92,4 @@ def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(odlcs_client())
+    print(map_image_client())
