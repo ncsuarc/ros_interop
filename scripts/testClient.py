@@ -4,7 +4,8 @@ import sys
 import rospy
 from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest, TelemetrySrv, TelemetrySrvRequest, ODLCs,ODLCsRequest,Image,ImageRequest
 from ros_interop.msg import *
-from geographic_msgs.msg import GeoPoint\
+from geographic_msgs.msg import GeoPoint
+from pathlib import Path
 
 def teams_client():
     rospy.wait_for_service('teams')
@@ -61,9 +62,12 @@ def map_image_client():
     rospy.wait_for_service('map_image')
     try:
         map_service = rospy.ServiceProxy('map_image',Image)
+        req = map_service(ImageRequest(id = 1,request_type = RequestType(RequestType.PUT),image_data = Path('/home/kssaboo/catkin_ws/imageABCD3.png').read_bytes() ))
+        print('hi')
         resp = map_service(ImageRequest(id = 1,request_type = RequestType(RequestType.GET)))
-        with open('imageABCD.png','w') as f:
-            f.write(str(resp.image_data))
+        with open('/home/kssaboo/catkin_ws/imageABCD2.png','wb') as f:
+            f.write((resp.image_data))
+        
         return None
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)

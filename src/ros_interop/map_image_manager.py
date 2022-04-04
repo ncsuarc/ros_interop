@@ -10,8 +10,8 @@ class MapImageManager():
         type = req.request_type.request_type
         if type == RequestType.GET: 
             return self.get_image(req)
-        elif type == RequestType.POST:
-            return self.post_image(req)
+        elif type == RequestType.PUT:
+            return self.put_image(req)
         elif type == RequestType.DELETE:
             return self.delete_image(req)
         else:
@@ -23,10 +23,11 @@ class MapImageManager():
         response.id = id
         response.image_data = image
         return response
-    def post_image(self,req):
+    def put_image(self,req):
         id = req.id
         image_data = req.image_data
-        print(image_data)
+        self.interop_client.put_map_image(id,image_data)
+        return ImageResponse(id = id)
     def delete_image(self,req):
         id = req.id
         self.interop_client.delete_map_image(id)
