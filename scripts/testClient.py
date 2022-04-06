@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import sys
+from urllib.request import Request
 import rospy
 from ros_interop.srv import Team,ODLC,ODLCRequest,Mission,MissionRequest, TelemetrySrv, TelemetrySrvRequest, ODLCs,ODLCsRequest,Image,ImageRequest
 from ros_interop.msg import *
@@ -28,6 +29,7 @@ def odlc_client():
         msg.type = odlc_type(odlc_type.EMERGENT)
         msg.orientation = odlc_orientation(odlc_orientation.N)
         msg.shape = odlc_shape(odlc_shape.STAR)
+        #TODO Fix Alphanumeric ODLC
         #msg.alphanumeric = ""
         msg.shape_color = Color(Color.RED)
         msg.alphanumeric_color = Color(Color.BLACK)
@@ -64,15 +66,26 @@ def map_image_client():
         map_service = rospy.ServiceProxy('map_image',Image)
         req = map_service(ImageRequest(id = 1,request_type = RequestType(RequestType.PUT),image_data = Path('/home/kssaboo/catkin_ws/imageABCD3.png').read_bytes() ))
         print('hi')
+        #req = map_service(ImageRequest(id = 1, request_type = RequestType(RequestType.DELETE)))
         resp = map_service(ImageRequest(id = 1,request_type = RequestType(RequestType.GET)))
         with open('/home/kssaboo/catkin_ws/imageABCD2.png','wb') as f:
             f.write((resp.image_data))
-        
         return None
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 def odlc_image_client():
-    pass
+    rospy.wait_for_service('odlc_image')
+    try:
+        map_service = rospy.ServiceProxy('odlc_image',Image)
+        req = map_service(ImageRequest(id = 100,request_type = RequestType(RequestType.PUT),image_data = Path('/home/kssaboo/catkin_ws/imageABCD3.png').read_bytes() ))
+        print('hi')
+        #req = map_service(ImageRequest(id = 1, request_type = RequestType(RequestType.DELETE)))
+        resp = map_service(ImageRequest(id = 100,request_type = RequestType(RequestType.GET)))
+        with open('/home/kssaboo/catkin_ws/imageABCD4.png','wb') as f:
+            f.write((resp.image_data))
+        return None
+    except rospy.ServiceException as e:
+        print("Service call failed: %s"%e)
 def telemetry_client():
     rospy.wait_for_service('telemetry')
     try:
@@ -96,4 +109,4 @@ def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    print(map_image_client())
+    print(odlc_image_client())

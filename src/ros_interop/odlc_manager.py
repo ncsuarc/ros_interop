@@ -36,6 +36,8 @@ class ODLCManager:
             return self.get_target_image(req)
         elif type == RequestType.PUT:
             return self.put_target_image(req)
+        elif type == RequestType.DELETE:
+            return self.delete_target_image(req)
         else:
             return None
 
@@ -44,7 +46,6 @@ class ODLCManager:
         image = self.interop_client.get_odlc_image(id)
         response = ImageResponse()
         response.id = id
-        image_data_list = list(bytearray(image))
         response.image_data = image
         return response
 
@@ -52,11 +53,13 @@ class ODLCManager:
 
         id = req.id
         image_data = req.image_data
-        self.interop_client.put_odlc_image(id,image_data)
-        return ImageResponse(id = id)
+        self.interop_client.put_odlc_image(id, image_data)
+        return ImageResponse(id=id)
 
     def delete_target_image(self, req):
-        pass
+        id = req.id
+        self.interop_client.delete_odlc_image(id)
+        return ImageResponse(id=id)
 
     def get_targets(self, req):
         missionID = req.mission_id
@@ -124,6 +127,7 @@ class ODLCManager:
         target_details["longitude"] = target_info.longitude
         target_details["orientation"] = target_info.orientation.direction
         target_details["shape"] = target_info.shape.shape
+        #TODO Fix Alphanumeric ODLC
         # target_details['alphanumeric'] = target_info.alphanumeric
         target_details["shape_color"] = target_info.shape_color.color_num
         target_details["alphanumeric_color"] = target_info.alphanumeric_color.color_num
@@ -143,6 +147,7 @@ class ODLCManager:
         new_target_details["longitude"] = target_info.longitude
         new_target_details["orientation"] = target_info.orientation.direction
         new_target_details["shape"] = target_info.shape.shape
+        #TODO Fix Alphanumeric ODLC
         # new_target_details['alphanumeric'] = target_info.alphanumeric
         new_target_details["shape_color"] = target_info.shape_color.color_num
         new_target_details[
