@@ -1,0 +1,2 @@
+geographic_msgs/GeoPoint position
+float64 heading

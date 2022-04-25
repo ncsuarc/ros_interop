@@ -1,0 +1,6 @@
+RequestType request_type
+int64 id
+uint8[] image_data
+---
+int64 id
+uint8[] image_data

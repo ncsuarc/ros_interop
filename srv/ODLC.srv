@@ -1,0 +1,6 @@
+int64 id
+RequestType request_type
+singleODLC post_target_info
+---
+int64 id
+singleODLC target_info

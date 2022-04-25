@@ -1,0 +1,3 @@
+float64 altitude_min
+float64 altitude_max
+geographic_msgs/GeoPoint[] boundary_points
