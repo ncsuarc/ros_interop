@@ -9,3 +9,5 @@ geographic_msgs/GeoPoint[] air_drop_boundary_points
 geographic_msgs/GeoPoint air_drop_pos
 geographic_msgs/GeoPoint ugv_drive_pos
 StationaryObstacle[] stationary_obstacles
+geographic_msgs/GeoPoint map_center_pos
+float32 map_height

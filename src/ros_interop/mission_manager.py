@@ -49,5 +49,7 @@ class MissionManager():
         for stationary_obstacle in mission_data['stationaryObstacles']:
             stationaryObstacle = StationaryObstacle(stationary_obstacle['latitude'],stationary_obstacle['longitude'],stationary_obstacle['radius'],stationary_obstacle['height'])
             mission_info.stationary_obstacles.append(stationaryObstacle)
+        mission_info.map_center_pos = GeoPoint(latitude=mission_data["mapCenterPos"]["latitude"], longitude=mission_data["mapCenterPos"]["longitude"])
+        mission_info.map_height = mission_data['mapHeight']
         response = MissionResponse(mission_info)
         return response
