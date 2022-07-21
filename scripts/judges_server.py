@@ -26,5 +26,5 @@ def judges_server(url:str, username:str, password:str):
     rospy.spin()
 
 if __name__ == '__main__':
-    judges_server("http://localhost:8000","testuser","testpass")
+    judges_server("http://10.10.130.10:80","north-carolina-state-university","4184601216")
     
