@@ -1,0 +1,13 @@
+int64 id
+geographic_msgs/GeoPoint lost_comms_pos
+FlyZone[] fly_zones
+geographic_msgs/GeoPoint[] waypoints
+geographic_msgs/GeoPoint[] search_grid_points
+geographic_msgs/GeoPoint off_axis_odlc_pos
+geographic_msgs/GeoPoint emergent_last_known_pos
+geographic_msgs/GeoPoint[] air_drop_boundary_points
+geographic_msgs/GeoPoint air_drop_pos
+geographic_msgs/GeoPoint ugv_drive_pos
+StationaryObstacle[] stationary_obstacles
+geographic_msgs/GeoPoint map_center_pos
+float32 map_height

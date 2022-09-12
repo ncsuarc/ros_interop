@@ -1,0 +1,3 @@
+<launch>
+  <node name="judges_server" pkg="ros_interop" type="judges_server.py" output="screen" required = "true"/> 
+</launch>

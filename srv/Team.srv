@@ -1,0 +1,4 @@
+Header header
+RequestType request_type
+---
+TeamStatus[] team_list
